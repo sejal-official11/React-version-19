@@ -10,27 +10,24 @@ export const Posts = () => {
     console.log(res.data);
     setData(res.data);
   };
-  
+
   useEffect(() => {
     getPostData();
   }, []);
 
-
   // function to delete post
   const handleDeletePost = async (id) => {
-    try{
+    try {
       const res = await deletePost(id);
-      if(res.status === 200){
+      if (res.status === 200) {
         const newUpdatedPost = data.filter((currPost) => {
-          return currPost.id === id;
-        })
-        setData(newUpdatedPost)
+          return currPost.id != id;
+        });
+        setData(newUpdatedPost);
       }
-    }
-    catch(error) {
+    } catch (error) {
       console.log(error);
-    } 
-    
+    }
   };
 
   //   return <h1>Hello Post page</h1>;
@@ -44,8 +41,10 @@ export const Posts = () => {
               <p>Title: {title}</p>
               <p>Body: {body}</p>
               <button>Edit</button>
-              <button className="btn-delete"
-              onClick={() => handleDeletePost(id)} >
+              <button
+                className="btn-delete"
+                onClick={() => handleDeletePost(id)}
+              >
                 Delete
               </button>
             </li>
